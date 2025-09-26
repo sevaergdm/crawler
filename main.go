@@ -3,21 +3,26 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 func main() {
-	htmlText := `<html>
-  <body>
-    <h1>Welcome to Boot.dev</h1>
-		<p>This is an outside paragraph</p>
-		<p>This is another paragraph</p>
-  </body>
-</html>
-`
+	inputArgs := os.Args[1:]
 
-	bodyMain, err := getFirstParagraphFromHTML(htmlText)
-	if err != nil {
-		log.Fatal(err)
+	if len(inputArgs) < 1 {
+		log.Fatal("no website provided")
 	}
-	fmt.Println(bodyMain)
+
+	if len(inputArgs) > 1 {
+		log.Fatal("too many arguments provided")
+	}
+
+	baseURL := inputArgs[0]
+	fmt.Printf("starting crawl of: %s\n", baseURL)
+	pages := make(map[string]int)
+	crawlPage(baseURL, baseURL, pages)
+
+	for k, v := range pages {
+		fmt.Printf("Key: %s, Value: %d\n", k, v)
+	}
 }
