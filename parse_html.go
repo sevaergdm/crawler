@@ -8,14 +8,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type PageData struct {
-	URL            string
-	H1             string
-	FirstParagraph string
-	OutgoingLinks  []string
-	ImageURLs      []string
-}
-
 func getH1FromHTML(html string) (string, error) {
 	htmlReader := strings.NewReader(html)
 
